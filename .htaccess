@@ -1,0 +1,19 @@
+#Enciende el motor de sobre-escritura
+RewriteEngine On
+
+# Crear una regla para direccionar una url a otra
+# Regex --> Expresiones Regulares
+
+# ^: indica que la expresion regular va a comenzar a evaluarse despues del dominio
+# []: contenido dentro de los corchetes es la regla; indica los valores que se permiten
+# (): indica el inicio y el final de la regla
+# *: permite 0 o mas coincidencias
+#$:debera de requerir el valor exacto
+# /: separa parametros 
+# QSA: debe de generar un query string a partir de la ultima regla
+# L: debe detener el proceso de reescritura en la ultima instruccion
+# Esta regla permite que si recibe cualquier valor que sea texto se direccione a index.php y este contendra una accion
+RewriteRule ^([a-zA-Z_-]*)$ index.php?action=$1
+
+#Esta regla permite recibe cualquier cosa que venga despues del dominio y el siguiente parametro debe ser un numero
+RewriteRule ^([a-zA-Z_-]*)/([0-9+]*) index.php?action=$1&id=$2 [QSA,L]

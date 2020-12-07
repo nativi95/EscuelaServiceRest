@@ -1,0 +1,24 @@
+CREATE DATABASE escuela_db;
+USE escuela_db;
+
+CREATE TABLE Alumnos(
+IdAlumno BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+Nombre VARCHAR(100)  NOT NULL,
+Apellidos VARCHAR(100)  NOT NULL,
+Carnet VARCHAR(8)  NOT NULL
+)ENGINE innodb;
+
+CREATE TABLE Autor(
+IdAutor BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL, 
+Nombre VARCHAR(150)  NOT NULL,
+Carnet VARCHAR(8)  NOT NULL
+)ENGINE innodb;
+
+-- insert
+
+INSERT INTO Alumnos VALUES (1, 'Roberto', 'Sanchez', 'RS100216');
+INSERT INTO Alumnos VALUES (2, 'Karla', 'Ruiz', 'KR100218');
+INSERT INTO Alumnos VALUES (3, 'Andrea', 'Estupiñan', 'KR100218');
+
+INSERT INTO Autor VALUES (0, 'Juan Carlos Ruiz Nativi', 'RN100216');
+ 
