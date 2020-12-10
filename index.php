@@ -24,6 +24,12 @@ $alumnosAPI = new AlumnosAPI();
 $autorAPI = new AutorAPI();
 
 //Ejecucucion de metodo API
+
+ /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * metodo que direcciona a las diferentes apis segun la accion
+     */
 switch ($_REQUEST['action']) {
   case "alumnos":
     $alumnosAPI->API();

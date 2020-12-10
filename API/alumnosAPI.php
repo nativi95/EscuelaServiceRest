@@ -10,6 +10,11 @@
             $this->alumnosDB = new AlumnosDB();
         }
 
+        /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * metodo que direcciona el tipo de solicitud GET, POST, PUT, DELETEy un caso no conocido
+     */
         public function API()
         {
             header('Content-Type: application/JSON');

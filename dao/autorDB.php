@@ -5,6 +5,11 @@ class AutorDB
     protected $dbConn;
     protected $mysqliconn;
 
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo constructor que crea una conexion
+     */
     public function __construct()
     {
         try
@@ -19,6 +24,11 @@ class AutorDB
 
     }
 
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo que recibe la accion y el metodo de comunicaicon para ejecutar un GET y direcciona las diferentes consultas segun la peticion
+     */
     function GetAutores()
     {
         if($_REQUEST['action'] == 'autores')
@@ -29,6 +39,11 @@ class AutorDB
         }
     }
 
+     /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo que imprime en pantalla todos los registros
+     */
     public function GetAutoresAll()
     {
         $stmt = $this->mysqliconn->prepare("SELECT * FROM Autor;");
@@ -43,6 +58,12 @@ class AutorDB
         return $autores;
     }
 
+     /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * @param id
+     * Metodo que imprime en pantalla un registro segun id
+     */
     function response($code = 200, $status = "", $message = "")
     {
         http_response_code($code);

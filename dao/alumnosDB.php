@@ -3,9 +3,15 @@ require_once "./db/db.php";
 
 class AlumnosDB
 {
+    
     protected $dbConn;
     protected $mysqliconn;
 
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo constructor que crea una conexion
+     */
     public function __construct()
     {
         try {
@@ -16,6 +22,12 @@ class AlumnosDB
         }
     }
     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++GetAlumnos all y ById
+
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo que recibe la accion y el metodo de comunicaicon para ejecutar un GET y direcciona las diferentes consultas segun la peticion
+     */
     public function GetAlumnos()
     {
         if ($_REQUEST['action'] == 'alumnos') {
@@ -32,7 +44,11 @@ class AlumnosDB
         }
     }
 
-
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo que imprime en pantalla todos los registros
+     */
     function GetAlumnosAll()
     {
         $stmt = $this->mysqliconn->prepare("SELECT * FROM Alumnos;");
@@ -46,6 +62,12 @@ class AlumnosDB
         return $alumnos;
     }
 
+     /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * @param id
+     * Metodo que imprime en pantalla un registro segun id
+     */
     function GetAlumno($id = 0)
     {
         $stmt = $this->mysqliconn->prepare("SELECT * FROM Alumnos WHERE IdAlumno=?;"); //se utiliza statement para protegerse de sqlinyection
@@ -63,6 +85,12 @@ class AlumnosDB
     }
 
     //===========================================================SaveAlumno
+
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo que recibe la accion y el metodo de comunicaicon para ejecutar un POST y guardar un nuevo registro de alumnos
+     */
 
     function SaveAlumno()
     {
@@ -85,10 +113,19 @@ class AlumnosDB
         }
     }
 
-    public function Insert($Nombre, $Apellidos, $Carnet)
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * @param Nombre nombre de alumno
+     *  @param Apellidos apellidos de alumno
+     *  @param Carnet carnet de alumno
+     * Metodo que recibe los datos para realizar un insert alumnos
+     * @return retorna el resultado de la peticion sql
+     */
+    public function Insert($Nombres, $Apellidos, $Carnet)
     {
         $stmt = $this->mysqliconn->prepare("INSERT INTO Alumnos(Nombre, Apellidos, Carnet) VALUES(?,?,?);");
-        $stmt->bind_param('sss', $Nombre, $Apellidos, $Carnet);
+        $stmt->bind_param('sss', $Nombres, $Apellidos, $Carnet);
         $r = $stmt->execute();
         $stmt->close();
         return $r;
@@ -96,6 +133,11 @@ class AlumnosDB
 
     // /////////////////////////////////////////////////////////////UpdateAlumnos/////////////////////////////////////////////////////////
 
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo que recibe la accion y el metodo de comunicaicon para ejecutar un PUT y actualizar un registro de alumnos
+     */
     function UpdateAlumno()
     {
         if (isset($_REQUEST['action']) && isset($_REQUEST['id'])) {
@@ -117,6 +159,16 @@ class AlumnosDB
         $this->response(400);
     }
 
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * @param id id del alumno
+     * * @param Nombre nombre de alumno
+     *  @param Apellidos apellidos de alumno
+     *  @param Carnet carnet de alumno
+     * Metodo que recibe los datos para realizar un UPDATE de alumnos
+     * @return retorna el resultado de la peticion sql
+     */
     public function Update($id, $Nombre, $Apellidos, $Carnet)
     {
         if ($this->CheckID($id)) {
@@ -128,6 +180,12 @@ class AlumnosDB
         }
     }
 
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * @param id id del alumnos
+     * Metodo que evalua la existencia de un ID
+     */
     public function CheckID($id)
     {
         $stmt = $this->mysqliconn->prepare("SELECT * FROM Alumnos WHERE IdAlumno=?;");
@@ -142,13 +200,17 @@ class AlumnosDB
     }
 
     // -----------------------------------------------------------------DeleteAlumno-------------------------------
+
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo que recibe la accion y el metodo de comunicaicon para ejecutar un DELETE y elimina un registro de alumnos
+     */
     function DeleteAlumno()
     {
-        if (isset($_REQUEST['action']) && isset($_REQUEST['id']))
-        {
-            if($_REQUEST['action']== 'alumnos')
-            {
-                $db=new AlumnosDB();
+        if (isset($_REQUEST['action']) && isset($_REQUEST['id'])) {
+            if ($_REQUEST['action'] == 'alumnos') {
+                $db = new AlumnosDB();
                 $db->Delete($_REQUEST['id']);
                 exit;
             }
@@ -156,9 +218,16 @@ class AlumnosDB
         $this->response(400);
     }
 
-    public function Delete($id=0)
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * @param id id del alumno
+     * Metodo que recibe los datos para realizar un delete alumnos
+     * @return retorna el resultado de la peticion sql
+     */
+    public function Delete($id = 0)
     {
-        $stmt=$this->mysqliconn->prepare("DELETE FROM Alumnos WHERE IdAlumno=?;");
+        $stmt = $this->mysqliconn->prepare("DELETE FROM Alumnos WHERE IdAlumno=?;");
         $stmt->bind_param('i', $id);
         $r = $stmt->execute();
         $stmt->close();
@@ -167,6 +236,12 @@ class AlumnosDB
 
     // ************************************************************Mensajes*******************************************************
     //Método para generar los codigos de respuesta
+
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * Metodo que imprime el jscon el codigo establecido el status y un mensaje
+     */
     public function response($code = 200, $status = "", $message = "")
     {
         http_response_code($code);
@@ -176,4 +251,3 @@ class AlumnosDB
         }
     }
 }
-?>

@@ -9,6 +9,11 @@ class AutorAPI
         $this->autorDB = new AutorDB();
     }
 
+    /**
+     * @autor Juan Carlos Ruiz Nativi
+     * @Carnet RN100216
+     * metodo que direcciona el tipo de solicitud GET
+     */
     public function API()
     {
         header('Content-Type: application/json');
